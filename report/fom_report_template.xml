@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="order_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    
+                    <div style="display: flex; width: 100%; flex-direction: column; align-items: center; margin: 0px 0px 30px 40%;">
+                        <h1>Purchase Order</h1>
+                    </div>  
+            
+                    <h2 class="mt16">
+                        <t>
+                            <span>Order # </span>
+                        </t>
+                        <span t-field="o.name"/>
+                    </h2>
+
+                    <div class="row mt32 mb32" id="informations">
+                        <div class="col-auto col-3 mw-100 mb-2">
+                            <strong>Order Type:</strong>
+                            <p class="m-0" t-field="o.ordertype"/>
+                        </div>
+                        <div class="col-auto col-3 mw-100 mb-2">
+                            <strong>Order Date:</strong>
+                            <p class="m-0" t-field="o.dateorder"/>
+                        </div>
+                        <div class="col-auto col-3 mw-100 mb-2">
+                            <strong>Market Type:</strong>
+                            <p class="m-0" t-field="o.markettype"/>
+                        </div>
+                        <div class="col-auto col-3 mw-100 mb-2">
+                            <strong>Customer:</strong>
+                            <p class="m-0" t-field="o.customer_id"/>
+                        </div>
+                        
+                    </div>
+                    <div class="row mt32 mb32" id="informations">
+                        
+                        <div class="col-auto col-3 mw-100 mb-2">
+                            <strong>Description:</strong>
+                            <p class="m-0" t-field="o.note"/>
+                        </div>
+                        <div class="col-auto col-3 mw-100 mb-2">
+                            <strong>Status:</strong>
+                            <p class="m-0" t-field="o.state"/>
+                        </div>
+                    </div>
+                    <!-- Displaying Customer's Address -->
+                    <div class="row mt-2">
+                        <strong>Customer Address:</strong>
+                        <p class="m-0" t-field="o.customer_id.street"/>
+                        <p class="m-0" t-field="o.customer_id.city"/>, <span t-field="o.customer_id.zip"/> 
+                        <p class="m-0" t-field="o.customer_id.state_id.name"/> 
+                        <p class="m-0" t-field="o.customer_id.country_id.name"/>
+                    </div>
+                    <table class="table table-sm o_main_table">
+                        <thead style="display: table-row-group">
+                            <tr t-att-class="'bg-200'">
+                                <th name="th_description" class="text-left">Description</th>
+                                <th name="th_quantity" class="text-right">Quantity</th>
+                                <th name="th_priceunit" class="text-right">Unit Price</th>
+                                <th name="th_subtotal" class="text-right">
+                                    <span groups="account.group_show_line_subtotals_tax_excluded">Amount</span>
+                                    <span groups="account.group_show_line_subtotals_tax_included">Total Price</span>
+                                </th>
+                            </tr>
+
+                        </thead>
+                        
+                        <tbody class="sale_tbody">
+                            <t t-foreach="o.order_line" t-as="line">
+                                <tr t-att-class="'font-weight-bold'">
+                                    <td name="td_description"><span t-field="line.product_id"/></td>
+                                    <td name="td_quantity" class="text-right"><span t-field="line.product_uom_qty"/></td>
+                                    <td name="td_priceunit" class="text-right"><span t-field="line.price_unit"/></td>
+                                    <td name="td_subtotal" class="text-right"><span t-field="line.subtotal"/></td>
+                                </tr>
+                                
+                            </t>
+                            <tr t-att-class="'bg-200'">
+                                <td colspan="3" class="text-right">Total</td>
+                                <td class="text-right">
+                                    <!-- Calculate and display the total amount -->
+                                    <span>R$</span><span t-esc="sum(o.order_line.mapped('subtotal'))"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- Additional content: Lorem Ipsum and Signature Line -->
+                    <p style="margin-top: 50px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tristique justo nec nibh auctor, ac posuere dui tristique.</p>
+                    <div style="margin-top: 20px; text-align: center; display: flex; flex-direction: column;"> <!-- Adjust margin as needed -->
+                        <p>__________________________</p><p>Signature</p>
+                    </div>
+                </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="report_fom_orders" model="ir.actions.report">
+        <field name="name">Freezer Order Report</field>
+        <field name="model">fom.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">fom.order_report_template</field>
+        <field name="report_file">fom.order_report_template</field>
+        <field name="print_report_name">'Report - {} {}'.format(object.name, object.dateorder.strftime("%Y-%m-%d"))</field>
+        <field name="binding_model_id" ref="model_fom_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+     <record id="report_fom_orders_xlsx" model="ir.actions.report">
+        <field name="name">Freezer Order Excel Report</field>
+        <field name="model">fom.order</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">fom.order_report_xlsx</field>
+        <field name="report_file">fom.order_report_xlsx</field>
+        <field name="print_report_name">'Report - {} {}'.format(object.name, object.dateorder.strftime("%Y-%m-%d"))</field>
+        <field name="binding_model_id" ref="model_fom_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>
